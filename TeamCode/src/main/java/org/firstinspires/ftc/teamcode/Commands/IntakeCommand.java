@@ -38,6 +38,8 @@ public class IntakeCommand extends Command {
 
     private double resetTime2 = System.currentTimeMillis();
 
+    final double INTAKE_MOVE_SPEED = 0.005;
+
     public IntakeCommand(ExplosiveTele op, Servo door, DcMotor intakeMotor, Servo lRotator, Servo rRotator,
                          BNO055Gyro intakeGyro, AnalogInput potent) {
         super(op, "intake");
@@ -63,6 +65,8 @@ public class IntakeCommand extends Command {
     @Override
     public void start() {
         intakePID.setup(1,0,0,0,0, 0);
+        lRotator.setPosition(lRotator.getPosition());
+        rRotator.setPosition(rRotator.getPosition());
     }
 
     @Override
@@ -89,6 +93,18 @@ public class IntakeCommand extends Command {
 
 
         //intake rotator
+
+        if (op.gamepad2.dpad_up) {
+            lRotator.setPosition(lRotator.getPosition() + INTAKE_MOVE_SPEED);
+            rRotator.setPosition(rRotator.getPosition() - INTAKE_MOVE_SPEED);
+        }
+        if (op.gamepad2.dpad_up) {
+            lRotator.setPosition(lRotator.getPosition() - INTAKE_MOVE_SPEED);
+            rRotator.setPosition(rRotator.getPosition() + INTAKE_MOVE_SPEED);
+        }
+
+
+        /*
         currPitch = (intakeGyro.x() * -1) + startingPitch;
 
         boolean buffer = System.currentTimeMillis() < resetTime2 + 1000;
@@ -144,22 +160,12 @@ public class IntakeCommand extends Command {
             lRotator.setPosition(0.5 - idePower);
         }
 
-        /*if (op.gamepad2.dpad_down) {
-            rRotator.setPosition(0.0);
-            lRotator.setPosition(1.0);
-        } else if (op.gamepad2.dpad_up) {
-            rRotator.setPosition(1.0);
-            lRotator.setPosition(0.0);
-        } else {
-            rRotator.setPosition(0.5);
-            lRotator.setPosition(0.5);
-        }*/
-
         op.telemetry.addData("Left", lRotator.getPosition());
         op.telemetry.addData("Right", rRotator.getPosition());
         //op.telemetry.addData("Idle Power", idePower);
         op.telemetry.addData("INTAKE GYRO", currPitch);
         op.telemetry.update();
+        */
     }
 
     public double limit(double maVal, double miVal, double input) {
