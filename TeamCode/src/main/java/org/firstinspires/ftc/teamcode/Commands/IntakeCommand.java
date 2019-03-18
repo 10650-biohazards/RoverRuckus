@@ -95,12 +95,16 @@ public class IntakeCommand extends Command {
         //intake rotator
 
         if (op.gamepad2.dpad_up) {
-            lRotator.setPosition(lRotator.getPosition() + INTAKE_MOVE_SPEED);
-            rRotator.setPosition(rRotator.getPosition() - INTAKE_MOVE_SPEED);
+            if (lRotator.getPosition() < 0.995 && rRotator.getPosition() > 0.005) {
+                lRotator.setPosition(lRotator.getPosition() + INTAKE_MOVE_SPEED);
+                rRotator.setPosition(rRotator.getPosition() - INTAKE_MOVE_SPEED);
+            }
         }
-        if (op.gamepad2.dpad_up) {
-            lRotator.setPosition(lRotator.getPosition() - INTAKE_MOVE_SPEED);
-            rRotator.setPosition(rRotator.getPosition() + INTAKE_MOVE_SPEED);
+        if (op.gamepad2.dpad_down) {
+            if (rRotator.getPosition() < 0.995 && lRotator.getPosition() > 0.005) {
+                lRotator.setPosition(lRotator.getPosition() - INTAKE_MOVE_SPEED);
+                rRotator.setPosition(rRotator.getPosition() + INTAKE_MOVE_SPEED);
+            }
         }
 
 
