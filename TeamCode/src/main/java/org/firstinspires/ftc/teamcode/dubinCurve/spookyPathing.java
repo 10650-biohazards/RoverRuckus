@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.dubinCurve;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Node;
-import org.firstinspires.ftc.teamcode.Subsystems.myArc;
+import org.firstinspires.ftc.teamcode.dubinCurve.Node;
+import org.firstinspires.ftc.teamcode.dubinCurve.myArc;
 
 public class spookyPathing {
 

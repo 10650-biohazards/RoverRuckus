@@ -93,7 +93,7 @@ public class IntakeCommand extends Command {
 
 
         //intake rotator
-
+        /*
         if (op.gamepad2.dpad_up) {
             if (lRotator.getPosition() < 0.995 && rRotator.getPosition() > 0.005) {
                 lRotator.setPosition(lRotator.getPosition() + INTAKE_MOVE_SPEED);
@@ -106,9 +106,10 @@ public class IntakeCommand extends Command {
                 rRotator.setPosition(rRotator.getPosition() + INTAKE_MOVE_SPEED);
             }
         }
+        */
 
 
-        /*
+
         currPitch = (intakeGyro.x() * -1) + startingPitch;
 
         boolean buffer = System.currentTimeMillis() < resetTime2 + 1000;
@@ -164,12 +165,13 @@ public class IntakeCommand extends Command {
             lRotator.setPosition(0.5 - idePower);
         }
 
+
         op.telemetry.addData("Left", lRotator.getPosition());
         op.telemetry.addData("Right", rRotator.getPosition());
         //op.telemetry.addData("Idle Power", idePower);
-        op.telemetry.addData("INTAKE GYRO", currPitch);
+        //op.telemetry.addData("INTAKE GYRO", currPitch);
         op.telemetry.update();
-        */
+
     }
 
     public double limit(double maVal, double miVal, double input) {
