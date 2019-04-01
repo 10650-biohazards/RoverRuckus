@@ -26,7 +26,6 @@ public class IntakeCommand extends Command {
     private OpMode op;
     private PID intakePID = new PID();
 
-    private BNO055Gyro intakeGyro;
     private Orientation currOrient;
     private double currPitch = 0;
 
@@ -38,10 +37,10 @@ public class IntakeCommand extends Command {
 
     private double resetTime2 = System.currentTimeMillis();
 
-    final double INTAKE_MOVE_SPEED = 0.005;
+    final double INTAKE_MOVE_SPEED = 0.015;
 
     public IntakeCommand(ExplosiveTele op, Servo door, DcMotor intakeMotor, Servo lRotator, Servo rRotator,
-                         BNO055Gyro intakeGyro, AnalogInput potent) {
+                         AnalogInput potent) {
         super(op, "intake");
 
         this.op = op;
@@ -51,22 +50,20 @@ public class IntakeCommand extends Command {
         this.lRotator = lRotator;
         this.rRotator = rRotator;
 
-        this.intakeGyro = intakeGyro;
-
         this.potent = potent;
     }
 
 
     @Override
     public void init() {
-        intakeGyro.initialize();
+
     }
 
     @Override
     public void start() {
         intakePID.setup(1,0,0,0,0, 0);
-        lRotator.setPosition(lRotator.getPosition());
-        rRotator.setPosition(rRotator.getPosition());
+        lRotator.setPosition(0.5);
+        rRotator.setPosition(0.5);
     }
 
     @Override
@@ -93,23 +90,18 @@ public class IntakeCommand extends Command {
 
 
         //intake rotator
-        /*
         if (op.gamepad2.dpad_up) {
-            if (lRotator.getPosition() < 0.995 && rRotator.getPosition() > 0.005) {
-                lRotator.setPosition(lRotator.getPosition() + INTAKE_MOVE_SPEED);
-                rRotator.setPosition(rRotator.getPosition() - INTAKE_MOVE_SPEED);
-            }
+            lRotator.setPosition(lRotator.getPosition() - INTAKE_MOVE_SPEED);
+            rRotator.setPosition(rRotator.getPosition() + INTAKE_MOVE_SPEED);
         }
         if (op.gamepad2.dpad_down) {
-            if (rRotator.getPosition() < 0.995 && lRotator.getPosition() > 0.005) {
-                lRotator.setPosition(lRotator.getPosition() - INTAKE_MOVE_SPEED);
-                rRotator.setPosition(rRotator.getPosition() + INTAKE_MOVE_SPEED);
-            }
+            lRotator.setPosition(lRotator.getPosition() + INTAKE_MOVE_SPEED);
+            rRotator.setPosition(rRotator.getPosition() - INTAKE_MOVE_SPEED);
         }
-        */
 
 
 
+        /*
         currPitch = (intakeGyro.x() * -1) + startingPitch;
 
         boolean buffer = System.currentTimeMillis() < resetTime2 + 1000;
@@ -164,6 +156,7 @@ public class IntakeCommand extends Command {
             rRotator.setPosition(0.5 + idePower);
             lRotator.setPosition(0.5 - idePower);
         }
+        */
 
 
         op.telemetry.addData("Left", lRotator.getPosition());

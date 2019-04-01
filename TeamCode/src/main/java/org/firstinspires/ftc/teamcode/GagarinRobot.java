@@ -25,7 +25,6 @@ public class GagarinRobot {
     public ArmSubsystem arm;
     public LiftSubsystem lift;
     public MarkerSubsystem mark;
-    public BNO055Gyro intakeGyro;
 
     //LinearOpMode op;
     //OpMode op;
@@ -39,8 +38,6 @@ public class GagarinRobot {
 
     public GagarinRobot(ExplosiveAuto op) {
         //this.op = op;
-
-        intakeGyro = new BNO055Gyro(op.hardwareMap, "imu");
 
         bright = op.hardwareMap.get(DcMotor.class, "rightB");
         fright = op.hardwareMap.get(DcMotor.class, "right");
@@ -70,8 +67,6 @@ public class GagarinRobot {
     public GagarinRobot(ExplosiveTele op, HardwareMap hardwareMap) {
         //this.op = op;
 
-        intakeGyro = new BNO055Gyro(hardwareMap, "imu");
-
         bright = hardwareMap.get(DcMotor.class, "rightB");
         fright = hardwareMap.get(DcMotor.class, "right");
         bleft = hardwareMap.get(DcMotor.class, "leftB");
@@ -97,7 +92,7 @@ public class GagarinRobot {
 
     public void initSubsystems(LinearOpMode op) {
         drive = new DriveSubsystem(op, fleft, fright, bleft, bright, gyro, ultra);
-        intake = new IntakeSubsystem(op, intakeMotor, lRotator, rRotator, intakeGyro);
+        intake = new IntakeSubsystem(op, intakeMotor, lRotator, rRotator);
         arm = new ArmSubsystem(op, slideMotor);
         lift = new LiftSubsystem(op, liftMotor);
         mark = new MarkerSubsystem(op, markServo);

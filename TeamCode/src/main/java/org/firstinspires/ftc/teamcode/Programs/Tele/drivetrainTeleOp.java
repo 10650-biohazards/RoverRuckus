@@ -27,8 +27,7 @@ public class drivetrainTeleOp extends ExplosiveTele {
 
         ArmCommand arm = new ArmCommand(this, robot.slideMotor, robot.rackMotor, robot.potent);
         DriveCommand drive = new DriveCommand(this, robot.fleft, robot.fright, robot.bleft, robot.bright, robot.gyro);
-        IntakeCommand intake = new IntakeCommand(this, robot.door, robot.intakeMotor, robot.lRotator, robot.rRotator,
-                                                 robot.intakeGyro, robot.potent);
+        IntakeCommand intake = new IntakeCommand(this, robot.door, robot.intakeMotor, robot.lRotator, robot.rRotator, robot.potent);
         LiftCommand lift = new LiftCommand(this, robot.liftMotor);
         MarkerCommand mark = new MarkerCommand(this, robot.markServo);
 
