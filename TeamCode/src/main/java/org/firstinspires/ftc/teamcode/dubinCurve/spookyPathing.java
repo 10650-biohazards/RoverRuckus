@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.dubinCurve.myArc;
 public class spookyPathing {
 
     static Node start = new Node(0, 0, 0);
-    static Node end = new Node(4,0, 0);
+    static Node end = new Node(4,4, 90);
 
     static myArc firstArc = new myArc(start, true);
     static myArc secondArc = new myArc(end, true);
