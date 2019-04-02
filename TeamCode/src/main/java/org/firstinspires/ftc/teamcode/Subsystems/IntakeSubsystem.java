@@ -20,7 +20,7 @@ public class IntakeSubsystem extends Subsystem {
     public Servo lRotator, rRotator;
     public BNO055Gyro intakeGyro;
 
-    public IntakeSubsystem(LinearOpMode op, DcMotor intakeMotor, Servo lRotator, Servo rRotator, BNO055Gyro intakeGyro) {
+    public IntakeSubsystem(LinearOpMode op, DcMotor intakeMotor, Servo lRotator, Servo rRotator) {
         super(op);
         this.intakeMotor = intakeMotor;
         this.lRotator = lRotator;
