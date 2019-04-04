@@ -99,6 +99,23 @@ public class DriveSubsystem extends Subsystem {
         move_straight_PID(targetDist,3000);
     }
 
+    public void move_straight_raw(double targetDist) {
+        double target = targetDist - bright.getCurrentPosition();
+        u.startTimer(5000);
+
+        while(bright.getCurrentPosition() < target - 50 && !u.timerDone()) {
+            op.telemetry.addData("pow", PID.status(-bright.getCurrentPosition()));
+            op.telemetry.addData("enc", -bright.getCurrentPosition());
+            op.telemetry.addData("target", target);
+            op.telemetry.update();
+            set_Pows(-1,-1,-1,-1);
+
+            if (!op.opModeIsActive()) {
+                return;
+            }
+        }
+    }
+
     public void move_turn_gyro(double targetAng, int catchTime){
         PID.setup(0.004, 0, 0, 0.07, 0.5, targetAng);
         u.startTimer(catchTime);
@@ -127,6 +144,33 @@ public class DriveSubsystem extends Subsystem {
 
     public void move_turn_gyro(double targetAng) {
         move_turn_gyro(targetAng, 3000);
+    }
+
+    public void swing_turn_gyro(double targetAng, boolean right) {
+        u.startTimer(3000);
+        boolean done = false;
+        while (!done && !u.timerDone()) {
+            op.telemetry.addData("ang", gyro.getYaw());
+            op.telemetry.addData("time", System.currentTimeMillis() - u.startTime);
+            op.telemetry.update();
+            if (right) {
+                set_Pows(0, 0, -1, -1);
+            } else {
+                set_Pows(1, 1, 0, 0);
+            }
+
+            if (right && gyro.getYaw() > targetAng - 0.5) {
+                done = true;
+            }
+
+            if (!right && gyro.getYaw() < targetAng + 0.5) {
+                done = true;
+            }
+
+            if (!op.opModeIsActive()) {
+                return;
+            }
+        }
     }
 
     public double optimizeAngle(double input) {
@@ -328,7 +372,7 @@ public class DriveSubsystem extends Subsystem {
         u.waitMS(200);
     }
 
-    private void set_Pows(double brp, double frp, double blp, double flp) {
+    public void set_Pows(double brp, double frp, double blp, double flp) {
         bright.setPower(brp);
         fright.setPower(frp);
         bleft.setPower(blp);

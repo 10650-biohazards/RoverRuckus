@@ -2,22 +2,26 @@ package org.firstinspires.ftc.teamcode.dubinCurve;
 
 public class myArc {
 
-    final double RADIUS = 0.5;
+    public final double RADIUS = 0.5;
     Node startNode;
     public double length;
     boolean right;
 
-    public myArc(Node startNode, boolean right) {
+    public myArc(Node startNode) {
         this.startNode = startNode;
-        this.right = right;
     }
 
     public myPoint findCenter() {
         double x = startNode.x;
         double y = startNode.y;
 
-        x += RADIUS * Math.sin(Math.toRadians(startNode.ang) + (Math.PI/2));
-        y += RADIUS * Math.sin(Math.toRadians(startNode.ang) + (Math.PI));
+        if (right) {
+            x += RADIUS * Math.sin(Math.toRadians(startNode.ang) + (Math.PI / 2));
+            y += RADIUS * Math.sin(Math.toRadians(startNode.ang) + (Math.PI));
+        } else {
+            x -= RADIUS * Math.sin(Math.toRadians(startNode.ang) + (Math.PI / 2));
+            y += RADIUS * Math.sin(Math.toRadians(startNode.ang));
+        }
 
         return new myPoint(x, y);
     }
@@ -38,5 +42,9 @@ public class myArc {
         }
 
         return new myPoint(x, y);
+    }
+
+    public void setDirection(boolean right) {
+        this.right = right;
     }
 }
