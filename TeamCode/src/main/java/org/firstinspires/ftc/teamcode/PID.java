@@ -83,7 +83,9 @@ public class PID {
     public double status(double inputValue, boolean oh_no) {
         e = tarVal - inputValue;
 
-        timeD = System.currentTimeMillis()- oldTime;
+        double currTime = System.currentTimeMillis();
+
+        timeD = currTime - oldTime;
 
         det = (e - oldE) / (timeD / 1000);
         integral += e * (timeD / 1000);
@@ -107,7 +109,7 @@ public class PID {
 
         bias = initD;
         oldE = e;
-        oldTime = System.currentTimeMillis();
+        oldTime = currTime;
         return (P * e) + (I * integral) + (D * det) + bias;
     }
 

@@ -63,7 +63,6 @@ public class driveTrack extends ExplosiveTele {
         y += Math.cos(Math.toRadians(currAng)) * deltaEnc;
         x += Math.sin(Math.toRadians(currAng)) * deltaEnc;
 
-
         oldEnc = currEnc;
 
         telemetry.addData("Current X position: ", x);
