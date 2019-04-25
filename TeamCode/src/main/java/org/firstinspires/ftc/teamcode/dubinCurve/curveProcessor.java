@@ -47,6 +47,46 @@ public class curveProcessor {
     }
 
     public void findCurves(Node start, Node end) {
+
+        double xMod = start.x;
+        double yMod = start.y;
+
+        start.x -= xMod;
+        start.y -= yMod;
+
+        end.x -= xMod;
+        end.y -= yMod;
+
+        double endRad = Math.sqrt(Math.pow(end.x, 2) + Math.pow(end.y, 2));
+        double relAng;
+
+        if (end.x < 0 && end.y < 0) {
+            relAng = -90 - Math.toDegrees(Math.atan(end.y/end.x));
+        } else if (end.x < 0 && end.y > 0) {
+            relAng = -90 - Math.toDegrees(Math.atan(end.y/end.x));
+        } else if (end.x > 0 && end.y > 0) {
+            relAng = 90 - Math.toDegrees(Math.atan(end.y/end.x));
+        } else if (end.x > 0 && end.y < 0) {
+            relAng = 90 - Math.toDegrees(Math.atan(end.y/end.x));
+        } else {
+            relAng = 0;
+        }
+
+        System.out.println("Pre-Relative Ang: " + relAng);
+
+        double angMod = start.rawAng;
+        start.calcAng -= angMod;
+        relAng -= angMod;
+
+        end.x = endRad * Math.sin(Math.toRadians(relAng));
+        end.y = endRad * Math.cos(Math.toRadians(relAng));
+
+        System.out.println("Dist: " + endRad);
+        System.out.println("Angle Mod: " + angMod);
+        System.out.println("Relative Ang: " + relAng);
+
+        end.calcAng -= angMod;
+
         firstArc = new myArc(start);
         secondArc = new myArc(end);
 
@@ -109,11 +149,11 @@ public class curveProcessor {
         yDiff = secondArc.findCenter().y - firstArc.findCenter().y;
         slope = Math.atan(yDiff / xDiff);
 
-        firstArc.setLength((-slope + (Math.PI/2)) - Math.toRadians(start.ang));
-        secondArc.setLength(Math.abs(Math.abs(Math.toRadians(end.rawAng)) - firstArc.length));
+        firstArc.setLength((-slope + (Math.PI/2)) - Math.toRadians(start.calcAng));
+        secondArc.setLength(Math.abs(Math.abs(Math.toRadians(end.calcAng)) - firstArc.length));
         //secondArc.setLength(Math.toRadians(end.ang) - (-slope + (Math.PI/2)));
 
-        double dist = findDist(new myPoint(firstArc.fin().x, firstArc.fin().y), new myPoint(secondArc.fin().x, secondArc.fin().y));
+        double dist = findDist(new myPoint(firstArc.findCenter().x, firstArc.findCenter().y), new myPoint(secondArc.findCenter().x, secondArc.findCenter().y));
 
         straight = new myStraight(dist);
     }
@@ -161,10 +201,10 @@ public class curveProcessor {
         slope = Math.atan(yDiff / xDiff);
 
         firstArc.setLength(-((-slope - (Math.PI/2)) - Math.toRadians(start.ang)));
-        secondArc.setLength(Math.abs(Math.abs(Math.toRadians(end.rawAng)) - firstArc.length));
+        secondArc.setLength(Math.abs(Math.abs(Math.toRadians(end.calcAng)) - firstArc.length));
         //secondArc.setLength((2 * Math.PI) - (Math.toRadians(end.ang) - slope));
 
-        double dist = findDist(new myPoint(firstArc.fin().x, firstArc.fin().y), new myPoint(secondArc.fin().x, secondArc.fin().y));
+        double dist = findDist(new myPoint(firstArc.findCenter().x, firstArc.findCenter().y), new myPoint(secondArc.findCenter().x, secondArc.findCenter().y));
 
         straight = new myStraight(dist);
 
@@ -212,7 +252,7 @@ public class curveProcessor {
         }
     }
 
-    public void telemtry() {
+    public void telemtry(Node start, Node end) {
         System.out.println();
         System.out.println("////Data////");
         System.out.println("Slope: " + (-Math.toDegrees(slope) + 90));
@@ -220,6 +260,7 @@ public class curveProcessor {
         System.out.println();
         System.out.println("////First Arc////");
         System.out.println("Length: " + Math.toDegrees(firstArc.length));
+        System.out.println("Start Point: (" + start.x + ", " + start.y + ")");
         System.out.println("End Point: (" + firstArc.fin().x + ", " + firstArc.fin().y + ")");
         System.out.println("Direction: " + firstArc.right);
         System.out.println("Center: (" + firstArc.findCenter().x + ", " + firstArc.findCenter().y + ")");
@@ -228,7 +269,18 @@ public class curveProcessor {
         System.out.println("Length: " + Math.toDegrees(secondArc.length));
         System.out.println("Direction: " + secondArc.right);
         System.out.println("Center: (" + secondArc.findCenter().x + ", " + secondArc.findCenter().y + ")");
-        //System.out.println("End Point: (" + secondArc.fin().x + ", " + secondArc.fin().y + ")");
+        System.out.println();
+        System.out.println("////Starting Node////");
+        System.out.println("Start Point: (" + start.x + ", " + start.y + ")");
+        System.out.println("Raw Angle: " + start.rawAng);
+        System.out.println("Calc Angle: " + start.calcAng);
+        System.out.println("Angle: " + start.ang);
+        System.out.println();
+        System.out.println("////Ending Node////");
+        System.out.println("Start Point: (" + end.x + ", " + end.y + ")");
+        System.out.println("Raw Angle: " + end.rawAng);
+        System.out.println("Calc Angle: " + end.calcAng);
+        System.out.println("Angle: " + end.ang);
     }
 
     private enum direction {

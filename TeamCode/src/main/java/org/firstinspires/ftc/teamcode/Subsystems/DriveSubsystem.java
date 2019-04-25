@@ -108,7 +108,7 @@ public class DriveSubsystem extends Subsystem {
             op.telemetry.addData("enc", -bright.getCurrentPosition());
             op.telemetry.addData("target", target);
             op.telemetry.update();
-            set_Pows(-1,-1,-1,-1);
+            set_Pows(-0.3,-0.3,-0.3,-0.3);
 
             if (!op.opModeIsActive()) {
                 return;

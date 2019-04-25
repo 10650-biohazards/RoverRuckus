@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.dubinCurve;
 
 public class myArc {
 
-    public final double RADIUS = 0.5;
+    public final double RADIUS = 0.916666666666666666;
     Node startNode;
     public double length;
     boolean right;
