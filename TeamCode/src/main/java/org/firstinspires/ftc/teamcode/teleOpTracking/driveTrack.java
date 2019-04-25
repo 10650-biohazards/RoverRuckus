@@ -27,6 +27,7 @@ public class driveTrack extends ExplosiveTele {
         robot.fright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.bleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.fleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         robot.bright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.fright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.bleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
