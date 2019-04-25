@@ -100,20 +100,31 @@ public class DriveSubsystem extends Subsystem {
     }
 
     public void move_straight_raw(double targetDist) {
+        PID.setup(0.0002,0, 0, 0.2,42, targetDist - bright.getCurrentPosition());
         double target = targetDist - bright.getCurrentPosition();
-        u.startTimer(5000);
+        u.startTimer(3000);
+        //op.telemetry.addData("pow", PID.status(bright.getCurrentPosition()));
+        //op.telemetry.addData("enc", bright.getCurrentPosition());
+        double power;
 
-        while(bright.getCurrentPosition() < target - 50 && !u.timerDone()) {
+        while(!PID.done() && !u.timerDone()) {
             op.telemetry.addData("pow", PID.status(-bright.getCurrentPosition()));
             op.telemetry.addData("enc", -bright.getCurrentPosition());
             op.telemetry.addData("target", target);
             op.telemetry.update();
+
             set_Pows(-0.3,-0.3,-0.3,-0.3);
+
+            power = PID.status(-bright.getCurrentPosition());
+            set_Pows(-power,-power,-power,-power);
+
 
             if (!op.opModeIsActive()) {
                 return;
             }
         }
+
+        set_Pows(0,0,0,0);
     }
 
     public void move_turn_gyro(double targetAng, int catchTime){
@@ -129,10 +140,6 @@ public class DriveSubsystem extends Subsystem {
             power = PID.status(gyro.getYaw());
             set_Pows(power,power,-power,-power);
 
-         //   if (gyro.getawY()== 225 || gyro.getYaw() == 135){
-           //     op.requestOpModeStop();
-            // }
-
             if (!op.opModeIsActive()) {
                 return;
             }
@@ -146,8 +153,34 @@ public class DriveSubsystem extends Subsystem {
         move_turn_gyro(targetAng, 3000);
     }
 
+    public void swing_turn_PID(double targetAng, boolean right){
+        PID.setup(0.07, 0, 0, 0.2, 0.5, targetAng);
+        u.startTimer(5000);
+        double power;
+        while (!PID.done() && !u.timerDone()) {
+            op.telemetry.addData("pow", PID.status(gyro.getYaw()));
+            op.telemetry.addData("ang", gyro.getYaw());
+            op.telemetry.addData("time", System.currentTimeMillis() - u.startTime);
+            op.telemetry.update();
+
+            power = PID.status(gyro.getYaw());
+
+            if (right) {
+                set_Pows(0, 0, -power, -power);
+            } else {
+                set_Pows(power, power, 0, 0);
+            }
+
+            if (!op.opModeIsActive()) {
+                return;
+            }
+        }
+
+        set_Pows(0,0,0,0);
+    }
+
     public void swing_turn_gyro(double targetAng, boolean right) {
-        u.startTimer(3000);
+        u.startTimer(10000);
         boolean done = false;
         while (!done && !u.timerDone()) {
             op.telemetry.addData("ang", gyro.getYaw());

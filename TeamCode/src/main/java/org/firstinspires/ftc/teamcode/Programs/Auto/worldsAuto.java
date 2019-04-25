@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.Programs.Auto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.GagarinRobot;
 import org.firstinspires.ftc.teamcode.dubinCurve.Node;
 import org.firstinspires.ftc.teamcode.dubinCurve.curveProcessor;
 
 import FtcExplosivesPackage.ExplosiveAuto;
 
+@Autonomous (name = "Dubi dubi doo")
 public class worldsAuto extends ExplosiveAuto{
 
     private GagarinRobot robot;
@@ -26,7 +29,7 @@ public class worldsAuto extends ExplosiveAuto{
 
     @Override
     public void body() throws InterruptedException {
-        curve.move(new Node(0, 0, robot.gyro.getYaw()), new Node(5, 5, 90));
+        curve.move(new Node(0, 0, robot.gyro.getYaw()), new Node(2, 1, 90));
     }
 
     @Override

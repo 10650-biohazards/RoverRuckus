@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.dubinCurve;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
+import org.opencv.core.Mat;
 
 public class curveProcessor {
 
@@ -20,7 +21,7 @@ public class curveProcessor {
     public Node refinedStart;
     public Node refinedEnd;
 
-    private final int TIICKSPERTILE = 1;
+    private final int TIICKSPERTILE = 1075;
 
     public curveProcessor(DriveSubsystem drive) {
         this.drive = drive;
@@ -30,17 +31,17 @@ public class curveProcessor {
         findCurves(start, end);
 
         if (firstArc.right) {
-            drive.swing_turn_gyro(drive.gyro.getYaw() + firstArc.length, true);
+            drive.swing_turn_PID(drive.gyro.getYaw() + Math.toDegrees(firstArc.length), true);
         } else {
-            drive.swing_turn_gyro(drive.gyro.getYaw() - firstArc.length, false);
+            drive.swing_turn_PID(drive.gyro.getYaw() - Math.toDegrees(firstArc.length), false);
         }
 
         drive.move_straight_raw(straight.length * TIICKSPERTILE);
 
         if (firstArc.right) {
-            drive.swing_turn_gyro(end.rawAng, true);
+            drive.swing_turn_PID(end.rawAng, true);
         } else {
-            drive.swing_turn_gyro(end.rawAng, false);
+            drive.swing_turn_PID(end.rawAng, false);
         }
 
         drive.set_Pows(0, 0, 0, 0);
