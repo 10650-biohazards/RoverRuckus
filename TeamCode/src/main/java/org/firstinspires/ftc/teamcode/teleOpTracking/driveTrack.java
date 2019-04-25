@@ -65,8 +65,12 @@ public class driveTrack extends ExplosiveTele {
 
         oldEnc = currEnc;
 
-        telemetry.addData("Current X position: ", x);
-        telemetry.addData("Current Y position: ", y);
+        telemetry.addData("Current X position", " " + x);
+        telemetry.addData("Current Y position", " " + y);
+        telemetry.addData("Back right Encoder", " " + robot.bright.getCurrentPosition());
+        telemetry.addData("Back left Encoder", "  " + robot.bleft.getCurrentPosition());
+        telemetry.addData("Front left Encoder", " " + robot.fleft.getCurrentPosition());
+        telemetry.addData("Front right Encoder", "" + robot.fright.getCurrentPosition());
         telemetry.update();
     }
 
