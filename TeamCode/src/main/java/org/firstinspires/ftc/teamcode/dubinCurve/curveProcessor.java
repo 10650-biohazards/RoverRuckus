@@ -38,7 +38,7 @@ public class curveProcessor {
 
         drive.move_straight_raw(straight.length * TIICKSPERTILE);
 
-        if (firstArc.right) {
+        if (secondArc.right) {
             drive.swing_turn_PID(end.rawAng, true);
         } else {
             drive.swing_turn_PID(end.rawAng, false);
@@ -257,7 +257,8 @@ public class curveProcessor {
         System.out.println();
         System.out.println("////Data////");
         System.out.println("Slope: " + (-Math.toDegrees(slope) + 90));
-        System.out.println("Line Length: " + straight.length);
+        System.out.println("Line Length: " + straight.length + " Tiles.");
+        System.out.println("Line Length: " + (straight.length * TIICKSPERTILE) + " Ticks.");
         System.out.println();
         System.out.println("////First Arc////");
         System.out.println("Length: " + Math.toDegrees(firstArc.length));

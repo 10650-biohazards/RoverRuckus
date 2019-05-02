@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.dubinCurve.curveProcessor;
 import FtcExplosivesPackage.ExplosiveAuto;
 
 @Autonomous (name = "Dubi dubi doo")
-public class worldsAuto extends ExplosiveAuto{
+public class worldsAuto extends ExplosiveAuto {
 
     private GagarinRobot robot;
     private curveProcessor curve;
@@ -29,7 +29,7 @@ public class worldsAuto extends ExplosiveAuto{
 
     @Override
     public void body() throws InterruptedException {
-        curve.move(new Node(0, 0, robot.gyro.getYaw()), new Node(2, 1, 90));
+        curve.move(new Node(0, 0, robot.gyro.getYaw()), new Node(2, 3, 0));
     }
 
     @Override

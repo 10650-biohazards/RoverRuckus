@@ -125,6 +125,7 @@ public class DriveSubsystem extends Subsystem {
         }
 
         set_Pows(0,0,0,0);
+        u.waitMS(2000);
     }
 
     public void move_turn_gyro(double targetAng, int catchTime){
@@ -154,7 +155,7 @@ public class DriveSubsystem extends Subsystem {
     }
 
     public void swing_turn_PID(double targetAng, boolean right){
-        PID.setup(0.07, 0, 0, 0.2, 0.5, targetAng);
+        PID.setup(0.07, 0, 0, 0.07, 0.5, targetAng);
         u.startTimer(5000);
         double power;
         while (!PID.done() && !u.timerDone()) {
@@ -177,6 +178,7 @@ public class DriveSubsystem extends Subsystem {
         }
 
         set_Pows(0,0,0,0);
+        u.waitMS(2000);
     }
 
     public void swing_turn_gyro(double targetAng, boolean right) {
